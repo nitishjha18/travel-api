@@ -5,18 +5,21 @@ import { getDataByPathParam } from "./Utils/getDataByPathParam.js";
 import { getDataByQueryParam } from "./Utils/getDataByQueryParam.js";
 
 const server = http.createServer(async (req, res) => {
-  const destinations = await getDataFromDB();
+  const destinations = await getDataFromDB()
 
-  const urlObj = new URL(req.url, `http://${req.headers.host}`);
-  const queryObj = Object.fromEntries(urlObj.searchParams);
-  console.log(queryObj);
+  const urlObj = new URL(req.url, `http://${req.headers.host}`)
+  const queryObj = Object.fromEntries(urlObj.searchParams)
+  console.log(queryObj)
 
   if (urlObj.pathname === "/api" && req.method === "GET") {
-
-    let filterData = getDataByQueryParam(destinations, queryObj);
-    sendJsonResponse(res, 200, filterData)
-
-  } else if (req.url.startsWith("/api/continent") && req.method === "GET") {
+  let filterData = getDataByQueryParam(destinations, queryObj);
+  sendJsonResponse(res, 200, { 
+    success: true,
+    count: filterData.length,
+    data: filterData 
+  })
+}
+ else if (req.url.startsWith("/api/continent") && req.method === "GET") {
 
     const continent = req.url.split("/").pop();
     const filterData = getDataByPathParam(destinations, "continent", continent);
@@ -25,7 +28,7 @@ const server = http.createServer(async (req, res) => {
   } else if (req.url.startsWith("/api/country") && req.method === "GET") {
 
     const country = req.url.split("/").pop()
-    const filterData = getDataByPathParam(destinations, "country", country);
+    const filterData = getDataByPathParam(destinations, "country", country)
     sendJsonResponse(res, 200, filterData)
 
   } else {
@@ -38,7 +41,7 @@ const server = http.createServer(async (req, res) => {
   }
 })
 
-const PORT = 8000;
+const PORT = 8000
 
 server.listen(
   PORT,
