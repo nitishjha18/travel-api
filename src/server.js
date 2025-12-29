@@ -1,8 +1,8 @@
 import http from "node:http";
-import { getDataFromDB } from "./Database/db.js";
-import { sendJsonResponse } from "./Utils/sendJsonResponse.js";
-import { getDataByPathParam } from "./Utils/getDataByPathParam.js";
-import { getDataByQueryParam } from "./Utils/getDataByQueryParam.js";
+import { getDataFromDB } from "../Database/db.js";
+import { sendJsonResponse } from "../Utils/sendJsonResponse.js";
+import { getDataByPathParam } from "../Utils/getDataByPathParam.js";
+import { getDataByQueryParam } from "../Utils/getDataByQueryParam.js";
 
 const server = http.createServer(async (req, res) => {
   const destinations = await getDataFromDB()
