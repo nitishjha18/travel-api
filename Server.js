@@ -12,23 +12,31 @@ const server = http.createServer(async (req, res) => {
   console.log(queryObj);
 
   if (urlObj.pathname === "/api" && req.method === "GET") {
+
     let filterData = getDataByQueryParam(destinations, queryObj);
-    sendJsonResponse(res, 200, filterData);
+    sendJsonResponse(res, 200, filterData)
+
   } else if (req.url.startsWith("/api/continent") && req.method === "GET") {
+
     const continent = req.url.split("/").pop();
     const filterData = getDataByPathParam(destinations, "continent", continent);
-    sendJsonResponse(res, 200, filterData);
+    sendJsonResponse(res, 200, filterData)
+
   } else if (req.url.startsWith("/api/country") && req.method === "GET") {
-    const country = req.url.split("/").pop();
+
+    const country = req.url.split("/").pop()
     const filterData = getDataByPathParam(destinations, "country", country);
-    dryer(res, 200, filterData);
+    sendJsonResponse(res, 200, filterData)
+
   } else {
+    
     sendJsonResponse(res, 404, {
       error: "not found",
       message: "The path does not exist",
-    });
+
+    })
   }
-});
+})
 
 const PORT = 8000;
 
